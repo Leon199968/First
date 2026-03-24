@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极速触点 · 射击游戏</title>
+    <meta name="description" content="一款基于Canvas的射击游戏，使用瞄准镜击碎彩色目标，挑战你的反应速度和精准度！">
+    <meta name="keywords" content="射击游戏,Canvas游戏,瞄准镜,HTML5游戏">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+    <!-- 顶部统计栏 -->
+    <div class="top-stats">
+        <div class="game-info">
+            <div class="stat-item">
+                <div class="stat-label">分数</div>
+                <div class="stat-value" id="scoreDisplay">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">时间</div>
+                <div class="stat-value" id="timerDisplay">60</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">连击</div>
+                <div class="stat-value" id="comboDisplay">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">命中率</div>
+                <div class="stat-value" id="hitRateDisplay">0%</div>
+            </div>
+        </div>
+        
+        <!-- 音效控制 -->
+        <div class="audio-controls">
+            <button class="audio-toggle" id="audioToggle">
+                <span id="audioIcon">🔊</span>
+                <span id="audioText">音效</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 游戏区域 -->
+    <div class="game-area">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    
+    <!-- 操作提示 -->
+    <div class="instructions">
+        🎯 使用瞄准镜精准射击 · 击碎彩色目标获得分数！ · 按 ESC 暂停游戏
+    </div>
+
+    <!-- 难度选择模态框 -->
+    <div id="difficultyModal" class="modal">
+        <div class="modal-content">
+            <h2>选择难度等级</h2>
+            <div class="difficulty-grid" id="difficultyGrid">
+                <!-- 难度选项将通过JS生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 暂停模态框 -->
+    <div id="pauseModal" class="pause-modal">
+        <div class="pause-content">
+            <div class="pause-title">游戏暂停</div>
+            <div class="pause-subtitle">按 ESC 键或点击按钮继续游戏</div>
+            <div class="pause-actions">
+                <button class="btn btn-primary" onclick="resumeGame()">继续游戏</button>
+                <button class="btn btn-secondary" onclick="quitGame()">退出游戏</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果模态框 -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content result-content">
+            <h2>挑战完成！</h2>
+            <div class="final-score" id="finalScore">0</div>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <div class="result-stat-value" id="resultCombo">0</div>
+                    <div class="result-stat-label">最高连击</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-value" id="resultHitRate">0%</div>
+                    <div class="result-stat-label">命中率</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-value" id="resultTargetsHit">0</div>
+                    <div class="result-stat-label">击中目标</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-stat-value" id="resultBestScore">0</div>
+                    <div class="result-stat-label">历史最佳</div>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button class="btn btn-primary" onclick="restartGame()">再来一局</button>
+                <button class="btn btn-secondary" onclick="backToMenu()">返回主菜单</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
