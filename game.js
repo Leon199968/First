@@ -61,6 +61,15 @@ class Particle {
 
 // 难度配置
 const difficultyConfig = {
+    newbie: {
+        name: '新手',
+        details: '巨大目标 · 超慢速度\n初学者友好',
+        targetCount: 2,
+        speed: 0.5,
+        radius: 45,
+        colors: ['#ff6b6b', '#4fc3f7'],
+        timeLimit: 90
+    },
     beginner: {
         name: '入门',
         details: '超大目标 · 慢速移动\n适合初次体验',
@@ -105,6 +114,42 @@ const difficultyConfig = {
         radius: 18,
         colors: ['#ff6b6b', '#4fc3f7', '#66bb6a', '#ffa726', '#ab47bc', '#26c6da'],
         timeLimit: 60
+    },
+    master: {
+        name: '大师',
+        details: '迷你目标 · 超高速度\n大师级考验',
+        targetCount: 10,
+        speed: 4.0,
+        radius: 15,
+        colors: ['#ff6b6b', '#4fc3f7', '#66bb6a', '#ffa726', '#ab47bc', '#26c6da', '#ff9800'],
+        timeLimit: 45
+    },
+    nightmare: {
+        name: '噩梦',
+        details: '极小目标 · 疯狂速度\n噩梦级挑战',
+        targetCount: 12,
+        speed: 5.0,
+        radius: 12,
+        colors: ['#ff6b6b', '#4fc3f7', '#66bb6a', '#ffa726', '#ab47bc', '#26c6da', '#ff9800', '#e91e63'],
+        timeLimit: 30
+    },
+    insane: {
+        name: '疯狂',
+        details: '微粒目标 · 闪电速度\n只有疯子才能完成',
+        targetCount: 15,
+        speed: 6.5,
+        radius: 10,
+        colors: ['#ff6b6b', '#4fc3f7', '#66bb6a', '#ffa726', '#ab47bc', '#26c6da', '#ff9800', '#e91e63', '#9c27b0'],
+        timeLimit: 30
+    },
+    godlike: {
+        name: '神级',
+        details: '尘埃目标 · 光速移动\n传说中的神级挑战',
+        targetCount: 20,
+        speed: 8.0,
+        radius: 8,
+        colors: ['#ff6b6b', '#4fc3f7', '#66bb6a', '#ffa726', '#ab47bc', '#26c6da', '#ff9800', '#e91e63', '#9c27b0', '#3f51b5'],
+        timeLimit: 20
     }
 };
 
@@ -434,6 +479,7 @@ function generateDifficultyButtons() {
     Object.entries(difficultyConfig).forEach(([key, config]) => {
         const btn = document.createElement('div');
         btn.className = 'difficulty-btn';
+        btn.setAttribute('data-difficulty', key);
         btn.onclick = () => startGame(key);
         
         const colorsHTML = config.colors.map(color => 
@@ -442,11 +488,18 @@ function generateDifficultyButtons() {
         
         const bestScore = bestScores[key] || 0;
         
+        // 添加特殊标记
+        let specialMark = '';
+        if (key === 'master') specialMark = ' 🏆';
+        else if (key === 'nightmare') specialMark = ' 💀';
+        else if (key === 'insane') specialMark = ' 🔥';
+        else if (key === 'godlike') specialMark = ' ⚡';
+        
         btn.innerHTML = `
-            <div class="difficulty-name">${config.name}</div>
+            <div class="difficulty-name">${config.name}${specialMark}</div>
             <div class="difficulty-details">${config.details}</div>
             <div class="difficulty-colors">${colorsHTML}</div>
-            <div class="difficulty-stats">最佳: ${bestScore} 分</div>
+            <div class="difficulty-stats">最佳: ${bestScore} 分 | 时间: ${config.timeLimit}s</div>
         `;
         
         grid.appendChild(btn);
